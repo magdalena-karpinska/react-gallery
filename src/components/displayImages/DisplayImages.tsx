@@ -12,7 +12,7 @@ export const DisplayImages = ({ images }: DisplayImagesProps) => {
         {images.map((image, index) => (
           <div className='image-wrapper' key={index}>
             <div className='image'>
-              <img src={image.urls.full} alt='unsplash image' />
+              <img src={image.urls.small} alt='unsplash image' />
             </div>
             <p>{image.alt_description}</p>
           </div>

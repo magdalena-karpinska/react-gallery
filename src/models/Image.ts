@@ -4,5 +4,5 @@ export interface Image {
 }
 
 interface URL {
-  full: string;
+  small: string;
 }
