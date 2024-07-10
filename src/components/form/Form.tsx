@@ -1,14 +1,18 @@
-import { useState } from "react";
 import "./form.scss";
 
-export const Form = () => {
-  const [searchWord, setSearchWord] = useState("");
+interface FormProps {
+  setSearchWord: (word: string) => void;
+  handleSubmit: (e: React.FormEvent) => void;
+  searchWord: string;
+}
 
-  const handleSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
-  };
+export const Form = ({
+  handleSubmit,
+  searchWord,
+  setSearchWord,
+}: FormProps) => {
   return (
-    <form action="submit" className="inputForm">
+    <form action="submit" className="inputForm" onSubmit={handleSubmit}>
       <input
         value={searchWord}
         onChange={(e) => setSearchWord(e.target.value)}
