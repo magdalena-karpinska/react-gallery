@@ -7,6 +7,7 @@ import { Image } from './models/Image';
 
 function App() {
   const [searchWord, setSearchWord] = useState('');
+  const [imageData, setImageData] = useState<Image[]>([]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -14,6 +15,7 @@ function App() {
 
     const data: Image[] = await getImages(searchWord);
 
+    setImageData(data);
     console.log(data[0].urls.full);
   };
 
