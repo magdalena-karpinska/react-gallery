@@ -13,6 +13,7 @@ function App() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const data: Image[] = await getImages(searchWord);
+    console.log(data);
     setImageData(data);
   };
 
