@@ -1,25 +1,20 @@
-import "./App.scss";
-import { FormEvent, useState } from "react";
-import { Form } from "./components/form/Form";
-import { Navbar } from "./components/navbar/Navbar";
-
-//const apiKey = "qRrrr0-zbjloU_Vk_hfaXzP-xS2FwQ8q9qeJBZtBdVY"
+import './App.scss';
+import { FormEvent, useState } from 'react';
+import { Form } from './components/form/Form';
+import { Navbar } from './components/navbar/Navbar';
+import { getImages } from './services/getImages';
+import { Image } from './models/Image';
 
 function App() {
-  const [searchWord, setSearchWord] = useState("");
+  const [searchWord, setSearchWord] = useState('');
 
-  const getData = async (searchWord: string) => {
-    const res = await fetch(
-      `https://api.unsplash.com/search/photos?query=${searchWord}&client_id=qRrrr0-zbjloU_Vk_hfaXzP-xS2FwQ8q9qeJBZtBdVY`
-    );
-    const data = await res.json();
-    console.log(data);
-  };
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log(searchWord);
-    getData(searchWord);
+
+    const data: Image[] = await getImages(searchWord);
+
+    console.log(data[0].urls.full);
   };
 
   return (
