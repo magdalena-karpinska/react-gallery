@@ -4,6 +4,7 @@ import { Form } from './components/form/Form';
 import { Navbar } from './components/navbar/Navbar';
 import { getImages } from './services/getImages';
 import { Image } from './models/Image';
+import { DisplayImages } from './components/displayImages/DisplayImages';
 
 function App() {
   const [searchWord, setSearchWord] = useState('');
@@ -11,12 +12,8 @@ function App() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(searchWord);
-
     const data: Image[] = await getImages(searchWord);
-
     setImageData(data);
-    console.log(data[0].urls.full);
   };
 
   return (
@@ -27,6 +24,7 @@ function App() {
         setSearchWord={setSearchWord}
         searchWord={searchWord}
       />
+      <DisplayImages images={imageData} />
     </>
   );
 }
