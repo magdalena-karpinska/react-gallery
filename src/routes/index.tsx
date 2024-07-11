@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-
 import { FormEvent, useState } from "react";
 import { Form } from "../components/form/Form";
 import { getImages } from "../services/getImages";
 import { Image } from "../models/Image";
 import { DisplayImages } from "../components/displayImages/DisplayImages";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/")({
   component: () => <Home />,
@@ -15,9 +15,16 @@ const Home = () => {
   const [imageData, setImageData] = useState<Image[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const queryClient = useQueryClient();
+  const { data } = useQuery({
+    queryFn: async () => await getImages(searchWord, 1),
+    queryKey: ["images", { searchWord }, { currentPage }],
+  });
+
+  console.log("our data:", data);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const data = await getImages(searchWord, 1);
+    // const data = await getImages(searchWord, 1);
     setImageData(data);
     setCurrentPage(1);
   };
