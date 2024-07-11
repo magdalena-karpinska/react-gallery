@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+
 import { FormEvent, useState } from 'react';
 import { Form } from '../components/form/Form';
 
@@ -6,10 +7,9 @@ import { getImages } from '../services/getImages';
 import { Image } from '../models/Image';
 import { DisplayImages } from '../components/displayImages/DisplayImages';
 
-export const Route = createFileRoute('/home')({
+export const Route = createFileRoute('/')({
   component: () => <Home />,
 });
-
 const Home = () => {
   const [searchWord, setSearchWord] = useState('');
   const [imageData, setImageData] = useState<Image[]>([]);
@@ -29,7 +29,7 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div>
       <Form
         handleSubmit={(e) => handleSubmit(e)}
         setSearchWord={setSearchWord}
@@ -45,6 +45,6 @@ const Home = () => {
 
         <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
       </div>
-    </>
+    </div>
   );
 };
