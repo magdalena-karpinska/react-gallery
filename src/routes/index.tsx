@@ -11,6 +11,7 @@ export const Route = createFileRoute("/")({
 
 const Home = () => {
   const [searchWord, setSearchWord] = useState("");
+  const [inputWord, setInputWord] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, refetch } = useQuery({
@@ -21,6 +22,7 @@ const Home = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setSearchWord(inputWord);
     refetch();
   };
 
@@ -33,8 +35,8 @@ const Home = () => {
     <div>
       <Form
         handleSubmit={handleSubmit}
-        setSearchWord={setSearchWord}
-        searchWord={searchWord}
+        setInputWord={setInputWord}
+        inputWord={inputWord}
       />
       {data ? (
         <DisplayImages images={data} />

@@ -1,21 +1,17 @@
 import "./form.scss";
 
 interface FormProps {
-  setSearchWord: (word: string) => void;
+  setInputWord: (word: string) => void;
   handleSubmit: (e: React.FormEvent) => void;
-  searchWord: string;
+  inputWord: string;
 }
 
-export const Form = ({
-  handleSubmit,
-  searchWord,
-  setSearchWord,
-}: FormProps) => {
+export const Form = ({ handleSubmit, inputWord, setInputWord }: FormProps) => {
   return (
     <form action="submit" className="inputForm" onSubmit={handleSubmit}>
       <input
-        value={searchWord}
-        onChange={(e) => setSearchWord(e.target.value)}
+        value={inputWord}
+        onChange={(e) => setInputWord(e.target.value)}
         placeholder="Type something"
         type="text"
         className="searchInput"
