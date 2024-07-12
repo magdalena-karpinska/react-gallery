@@ -2,9 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FormEvent, useState } from "react";
 import { Form } from "../components/form/Form";
 import { getImages } from "../services/getImages";
-import { Image } from "../models/Image";
 import { DisplayImages } from "../components/displayImages/DisplayImages";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/")({
   component: () => <Home />,
@@ -12,37 +11,36 @@ export const Route = createFileRoute("/")({
 
 const Home = () => {
   const [searchWord, setSearchWord] = useState("");
-  const [imageData, setImageData] = useState<Image[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const queryClient = useQueryClient();
-  const { data } = useQuery({
-    queryFn: async () => await getImages(searchWord, 1),
-    queryKey: ["images", { searchWord }, { currentPage }],
+  const { data, refetch } = useQuery({
+    queryFn: async () =>
+      searchWord === "" ? null : await getImages(searchWord, currentPage),
+    queryKey: ["images", searchWord, currentPage],
   });
 
-  console.log("our data:", data);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // const data = await getImages(searchWord, 1);
-    setImageData(data);
-    setCurrentPage(1);
+    refetch();
   };
 
   const handlePageChange = async (pageNumber: number) => {
-    const data = await getImages(searchWord, pageNumber);
-    setImageData(data);
     setCurrentPage(pageNumber);
+    refetch();
   };
 
   return (
     <div>
       <Form
-        handleSubmit={(e) => handleSubmit(e)}
+        handleSubmit={handleSubmit}
         setSearchWord={setSearchWord}
         searchWord={searchWord}
       />
-      <DisplayImages images={imageData} />
+      {data ? (
+        <DisplayImages images={data} />
+      ) : (
+        <p>Make a search to get images</p>
+      )}
       <div>
         {currentPage > 1 && (
           <button onClick={() => handlePageChange(currentPage - 1)}>
