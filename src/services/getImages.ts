@@ -1,3 +1,4 @@
+import { Image } from "../models/Image";
 const apiKey = import.meta.env.VITE_API_KEY;
 
 export const getImages = async (searchWord: string, page: number) => {
@@ -5,11 +6,11 @@ export const getImages = async (searchWord: string, page: number) => {
     const res = await fetch(
       `https://api.unsplash.com/search/photos?query=${searchWord}&client_id=${apiKey}&page=${page}`
     );
-    console.log("actual page number:", page);
-    const data = await res.json();
+    const data = (await res.json()) as Image;
     return data.results;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw {};
   }
 };
 
@@ -18,11 +19,11 @@ export const getImageById = async (id: string) => {
     const res = await fetch(
       `https://api.unsplash.com/photos/${id}?client_id=${apiKey}`
     );
-    const data = await res.json();
-    console.log("1 image id", data);
+    const data = (await res.json()) as Image;
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw {};
   }
 };
 
