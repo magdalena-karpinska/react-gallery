@@ -1,6 +1,6 @@
 import "../App.scss";
 import { createFileRoute } from "@tanstack/react-router";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { Form } from "../components/form/Form";
 import { DisplayImages } from "../components/displayImages/DisplayImages";
 import { useImages } from "../hooks/useImages";
@@ -11,13 +11,11 @@ export const Route = createFileRoute("/")({
 
 const Home = () => {
   const [searchWord, setSearchWord] = useState("");
-  const [inputWord, setInputWord] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   const imageData = useImages(searchWord, currentPage);
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (inputWord: string) => {
     setSearchWord(inputWord);
   };
 
@@ -27,11 +25,7 @@ const Home = () => {
 
   return (
     <div>
-      <Form
-        handleSubmit={handleSubmit}
-        setInputWord={setInputWord}
-        inputWord={inputWord}
-      />
+      <Form handleSubmit={handleSubmit} />
       <div className="button__container">
         {currentPage > 1 && (
           <button onClick={() => handlePageChange(currentPage - 1)}>
