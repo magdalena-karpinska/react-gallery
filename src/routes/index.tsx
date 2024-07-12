@@ -14,7 +14,7 @@ const Home = () => {
   const [inputWord, setInputWord] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, refetch } = useQuery({
+  const { data } = useQuery({
     queryFn: async () =>
       searchWord === "" ? null : await getImages(searchWord, currentPage),
     queryKey: ["images", searchWord, currentPage],
@@ -23,12 +23,10 @@ const Home = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSearchWord(inputWord);
-    refetch();
   };
 
   const handlePageChange = async (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    refetch();
   };
 
   return (
