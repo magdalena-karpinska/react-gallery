@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FormEvent, useState } from "react";
 import { Form } from "../components/form/Form";
-import { getImages } from "../services/getImages";
 import { DisplayImages } from "../components/displayImages/DisplayImages";
-import { useQuery } from "@tanstack/react-query";
+import { useImages } from "../hooks/useImages";
 
 export const Route = createFileRoute("/")({
   component: () => <Home />,
@@ -14,11 +13,7 @@ const Home = () => {
   const [inputWord, setInputWord] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data } = useQuery({
-    queryFn: async () =>
-      searchWord === "" ? null : await getImages(searchWord, currentPage),
-    queryKey: ["images", searchWord, currentPage],
-  });
+  const imageData = useImages(searchWord, currentPage);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -36,8 +31,8 @@ const Home = () => {
         setInputWord={setInputWord}
         inputWord={inputWord}
       />
-      {data ? (
-        <DisplayImages images={data} />
+      {imageData ? (
+        <DisplayImages images={imageData} />
       ) : (
         <p>Make a search to get images</p>
       )}
