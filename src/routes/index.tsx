@@ -1,3 +1,4 @@
+import "../App.scss";
 import { createFileRoute } from "@tanstack/react-router";
 import { FormEvent, useState } from "react";
 import { Form } from "../components/form/Form";
@@ -31,12 +32,7 @@ const Home = () => {
         setInputWord={setInputWord}
         inputWord={inputWord}
       />
-      {imageData ? (
-        <DisplayImages images={imageData} />
-      ) : (
-        <p>Make a search to get images</p>
-      )}
-      <div>
+      <div className="button__container">
         {currentPage > 1 && (
           <button onClick={() => handlePageChange(currentPage - 1)}>
             Previous
@@ -45,6 +41,11 @@ const Home = () => {
 
         <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
       </div>
+      {imageData ? (
+        <DisplayImages images={imageData} />
+      ) : (
+        <p>Make a search to get images</p>
+      )}
     </div>
   );
 };
